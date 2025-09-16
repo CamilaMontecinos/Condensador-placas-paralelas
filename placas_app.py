@@ -21,7 +21,7 @@ st.set_page_config(page_title="Campo eléctrico: placas paralelas", layout="wide
 
 # ---- Título más pequeño y centrado ----
 st.markdown(
-    "<div style='text-align: center; font-size:24px; font-weight:bold;'>"
+    "<div style='text-align: center; font-size:30px; font-weight:bold;'>"
     "Campo eléctrico - Condensador de placas paralelas"
     "</div>",
     unsafe_allow_html=True
@@ -64,7 +64,7 @@ def plot_parallel_plate(sep: float, density: float = DENSITY, grid_pts: int = GR
         Ey += cq * dy * inv_r3
 
     # Dibujo con matplotlib (figura más pequeña)
-    fig, ax = plt.subplots(figsize=(5, 5))
+    fig, ax = plt.subplots(figsize=(4.5, 4.5))
     ax.streamplot(X, Y, Ex, Ey, color='k', linewidth=1, density=density, arrowsize=1)
 
     # Placas
@@ -100,6 +100,7 @@ st.markdown(
     "</div>",
     unsafe_allow_html=True
 )
+
 
 
 
