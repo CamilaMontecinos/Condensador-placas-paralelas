@@ -19,6 +19,7 @@ GRID_PTS = 400
 
 st.set_page_config(page_title="Campo eléctrico: placas paralelas", layout="wide")
 
+# ---- Título más pequeño y centrado ----
 st.markdown(
     "<div style='text-align: center; font-size:20px; font-weight:bold;'>"
     "Campo eléctrico - Condensador de placas paralelas"
@@ -26,9 +27,7 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-
-st.title("Campo eléctrico - Condensador de placas paralelas")
-# st.caption("© Domenico Sapone, Camila Montecinos")
+st.caption("© Domenico Sapone, Camila Montecinos")
 
 # Panel lateral de configuración
 st.sidebar.header("Configuración")
@@ -65,7 +64,7 @@ def plot_parallel_plate(sep: float, density: float = DENSITY, grid_pts: int = GR
         Ey += cq * dy * inv_r3
 
     # Dibujo con matplotlib (figura más pequeña)
-    fig, ax = plt.subplots(figsize=(4.5, 4.5))
+    fig, ax = plt.subplots(figsize=(5, 5))
     ax.streamplot(X, Y, Ex, Ey, color='k', linewidth=1, density=density, arrowsize=1)
 
     # Placas
@@ -96,12 +95,11 @@ with col_centro:
 
 # Pie de página
 st.markdown(
-    "<div style='text-align:center; color:gray; font-size:16px;'>"
+    "<div style='text-align:center; color:gray; font-size:12px;'>"
     "© Domenico Sapone, Camila Montecinos"
     "</div>",
     unsafe_allow_html=True
 )
-
 
 
 
