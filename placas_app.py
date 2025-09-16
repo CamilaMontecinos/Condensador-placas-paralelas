@@ -57,7 +57,7 @@ def plot_parallel_plate(sep: float, density: float = DENSITY, grid_pts: int = GR
         Ey += cq * dy * inv_r3
 
     # Dibujo con matplotlib (figura más pequeña)
-    fig, ax = plt.subplots(figsize=(5, 5))
+    fig, ax = plt.subplots(figsize=(4.5, 4.5))
     ax.streamplot(X, Y, Ex, Ey, color='k', linewidth=1, density=density, arrowsize=1)
 
     # Placas
@@ -88,8 +88,9 @@ with col_centro:
 
 # Pie de página
 st.markdown(
-    "<div style='text-align:center; color:gray; font-size:12px;'>"
+    "<div style='text-align:center; color:gray; font-size:16px;'>"
     "© Domenico Sapone, Camila Montecinos"
     "</div>",
     unsafe_allow_html=True
 )
+
