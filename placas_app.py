@@ -21,13 +21,13 @@ st.set_page_config(page_title="Campo eléctrico: placas paralelas", layout="wide
 
 # ---- Título más pequeño y centrado ----
 st.markdown(
-    "<div style='text-align: center; font-size:20px; font-weight:bold;'>"
+    "<div style='text-align: center; font-size:24px; font-weight:bold;'>"
     "Campo eléctrico - Condensador de placas paralelas"
     "</div>",
     unsafe_allow_html=True
 )
 
-st.caption("© Domenico Sapone, Camila Montecinos")
+# st.caption("© Domenico Sapone, Camila Montecinos")
 
 # Panel lateral de configuración
 st.sidebar.header("Configuración")
@@ -100,6 +100,7 @@ st.markdown(
     "</div>",
     unsafe_allow_html=True
 )
+
 
 
 
