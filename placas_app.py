@@ -57,35 +57,37 @@ def plot_parallel_plate(sep, density=1.8, grid_pts=400):
         Ex += cq * dx * inv_r3
         Ey += cq * dy * inv_r3
 
-    # Dibujo con matplotlib
-    fig, ax = plt.subplots(figsize=(5, 5))
+    # --- Dibujo con matplotlib ---
+    fig, ax = plt.subplots(figsize=(5, 5))   # más pequeño que (7,7)
     ax.streamplot(X, Y, Ex, Ey, color='k', linewidth=1, density=density, arrowsize=1)
-
+    
     # Placas
     t = 0.04  # grosor visual
     ax.add_patch(plt.Rectangle((-length/2,  sep/2 - t/2),  length, t, color='crimson', zorder=3))
     ax.add_patch(plt.Rectangle((-length/2, -sep/2 - t/2),  length, t, color='navy',    zorder=3))
-
-    # Etiquetas +σ y −σ
+    
+    # Etiquetas
     ax.text(length/2 + 0.08,  sep/2, r'+$\sigma$', color='crimson', va='center', fontsize=12, weight='bold')
     ax.text(length/2 + 0.08, -sep/2, r'-$\sigma$', color='navy',    va='center', fontsize=12, weight='bold')
-
+    
     ax.set_aspect('equal')
     ax.set_xlim(-length, length)
     ax.set_ylim(-length, length)
     ax.set_xlabel('x (m)')
     ax.set_ylabel('y (m)')
     ax.set_title(f'Campo eléctrico (sep = {sep:.2f} m)')
+    
+    # --- Mostrar centrado ---
+    col1, col2, col3 = st.columns([1, 3, 1])   # relación de ancho: 1-3-1
+    with col2:
+        st.pyplot(fig)   # sin use_container_width
 
-    return fig
-
-fig = plot_parallel_plate(sep, density=DENSITY, grid_pts=GRID_PTS)
-st.pyplot(fig)
 
 st.markdown(
     "<div style='text-align:center; color:gray; font-size:12px;'>"
     "© Domenico Sapone, Camila Montecinos"
     "</div>", unsafe_allow_html=True
 )
+
 
 
