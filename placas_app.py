@@ -17,10 +17,12 @@ length = 2.0        # longitud de las placas (m)
 DENSITY  = 1.8
 GRID_PTS = 400
 
-# st.set_page_config(page_title="Campo eléctrico: placas paralelas", layout="wide")
+st.set_page_config(page_title="Campo eléctrico: placas paralelas", layout="wide")
 
 st.markdown(
-    "<h3 style='text-align: center;'>Campo eléctrico - Condensador de placas paralelas</h3>",
+    "<div style='text-align: center; font-size:20px; font-weight:bold;'>"
+    "Campo eléctrico - Condensador de placas paralelas"
+    "</div>",
     unsafe_allow_html=True
 )
 
@@ -99,6 +101,7 @@ st.markdown(
     "</div>",
     unsafe_allow_html=True
 )
+
 
 
 
