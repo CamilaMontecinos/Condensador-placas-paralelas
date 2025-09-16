@@ -1,0 +1,90 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Tue Sep 16 17:59:24 2025
+
+@author: camil
+"""
+
+import numpy as np
+import matplotlib.pyplot as plt
+import streamlit as st
+
+# -------- Parámetros fijos --------
+N      = 130        # número de "cargas" discretas por placa
+sigma  = 1.7        # densidad lineal (escala visual)
+length = 2.0        # longitud de las placas (m)
+
+st.set_page_config(page_title="Campo eléctrico: placas paralelas", layout="wide")
+
+st.title("Campo eléctrico - Condensador de placas paralelas")
+st.caption("© Domenico Sapone, Camila Montecinos")
+
+# Panel lateral de configuración
+st.sidebar.header("Configuración")
+config = st.sidebar.radio(
+    "Elige una configuración",
+    options=["Configuración 1", "Configuración 2", "Configuración 3"],
+    index=1
+)
+sep_options = {"Configuración 1": 0.5, "Configuración 2": 1.0, "Configuración 3": 1.5}
+sep = sep_options[config]
+
+# Extras opcionales
+density = st.sidebar.slider("Densidad de líneas (streamplot)", 0.6, 2.0, 1.5, 0.1)
+grid_pts = st.sidebar.slider("Resolución de grilla (por eje)", 150, 500, 400, 50)
+
+# --- Cálculo y dibujo ---
+def plot_parallel_plate(sep, density=1.5, grid_pts=400):
+    # Distribución de cargas (placas en y = ±sep/2)
+    xs = np.linspace(-length/2, length/2, N)
+    q = sigma * (length / N)
+    plate1 = [(x,  sep/2,  q) for x in xs]   # placa superior (+σ)
+    plate2 = [(x, -sep/2, -q) for x in xs]   # placa inferior (−σ)
+
+    # Malla para evaluar el campo
+    x = np.linspace(-length, length, grid_pts)
+    y = np.linspace(-length, length, grid_pts)
+    X, Y = np.meshgrid(x, y)
+    Ex = np.zeros_like(X, dtype=float)
+    Ey = np.zeros_like(Y, dtype=float)
+
+    # Superposición de campos de todas las "cargas" discretas
+    for (cx, cy, cq) in plate1 + plate2:
+        dx = X - cx
+        dy = Y - cy
+        r2 = dx**2 + dy**2
+        inv_r3 = np.where(r2 == 0, 0.0, 1.0 / (r2 * np.sqrt(r2)))
+        Ex += cq * dx * inv_r3
+        Ey += cq * dy * inv_r3
+
+    # Dibujo con matplotlib (render en Streamlit)
+    fig, ax = plt.subplots(figsize=(7, 7))
+    # Líneas de campo en negro
+    ax.streamplot(X, Y, Ex, Ey, color='k', linewidth=1, density=density, arrowsize=1)
+
+    # Placas
+    t = 0.04  # grosor visual
+    ax.add_patch(plt.Rectangle((-length/2,  sep/2 - t/2),  length, t, color='crimson', zorder=3))
+    ax.add_patch(plt.Rectangle((-length/2, -sep/2 - t/2),  length, t, color='navy',    zorder=3))
+
+    # Etiquetas +σ y −σ
+    ax.text(length/2 + 0.08,  sep/2, r'+$\sigma$', color='crimson', va='center', fontsize=12, weight='bold')
+    ax.text(length/2 + 0.08, -sep/2, r'-$\sigma$', color='navy',    va='center', fontsize=12, weight='bold')
+
+    ax.set_aspect('equal')
+    ax.set_xlim(-length, length)
+    ax.set_ylim(-length, length)
+    ax.set_xlabel('x (m)')
+    ax.set_ylabel('y (m)')
+    ax.set_title(f'Campo eléctrico (sep = {sep:.2f} m)')
+
+    return fig
+
+fig = plot_parallel_plate(sep, density=density, grid_pts=grid_pts)
+st.pyplot(fig, use_container_width=True)
+
+st.markdown(
+    "<div style='text-align:center; color:gray; font-size:12px;'>"
+    "© Domenico Sapone, Camila Montecinos"
+    "</div>", unsafe_allow_html=True
+)
