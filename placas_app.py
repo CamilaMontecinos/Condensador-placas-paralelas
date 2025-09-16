@@ -58,7 +58,7 @@ def plot_parallel_plate(sep, density=1.8, grid_pts=400):
         Ey += cq * dy * inv_r3
 
     # Dibujo con matplotlib
-    fig, ax = plt.subplots(figsize=(7, 7))
+    fig, ax = plt.subplots(figsize=(5, 5))
     ax.streamplot(X, Y, Ex, Ey, color='k', linewidth=1, density=density, arrowsize=1)
 
     # Placas
@@ -80,11 +80,12 @@ def plot_parallel_plate(sep, density=1.8, grid_pts=400):
     return fig
 
 fig = plot_parallel_plate(sep, density=DENSITY, grid_pts=GRID_PTS)
-st.pyplot(fig, use_container_width=True)
+st.pyplot(fig)
 
 st.markdown(
     "<div style='text-align:center; color:gray; font-size:12px;'>"
     "© Domenico Sapone, Camila Montecinos"
     "</div>", unsafe_allow_html=True
 )
+
 
