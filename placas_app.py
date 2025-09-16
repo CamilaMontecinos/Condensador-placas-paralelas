@@ -64,7 +64,7 @@ def plot_parallel_plate(sep: float, density: float = DENSITY, grid_pts: int = GR
         Ey += cq * dy * inv_r3
 
     # Dibujo con matplotlib (figura más pequeña)
-    fig, ax = plt.subplots(figsize=(4.5, 4.5))
+    fig, ax = plt.subplots(figsize=(4, 4))
     ax.streamplot(X, Y, Ex, Ey, color='k', linewidth=1, density=density, arrowsize=1)
 
     # Placas
@@ -100,6 +100,7 @@ st.markdown(
     "</div>",
     unsafe_allow_html=True
 )
+
 
 
 
