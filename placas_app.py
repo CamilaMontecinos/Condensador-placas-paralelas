@@ -14,6 +14,10 @@ N      = 130        # número de "cargas" discretas por placa
 sigma  = 1.7        # densidad lineal (escala visual)
 length = 2.0        # longitud de las placas (m)
 
+# Densidad y resolución fijos
+DENSITY  = 1.8
+GRID_PTS = 400
+
 st.set_page_config(page_title="Campo eléctrico: placas paralelas", layout="wide")
 
 st.title("Campo eléctrico - Condensador de placas paralelas")
@@ -29,12 +33,8 @@ config = st.sidebar.radio(
 sep_options = {"Configuración 1": 0.5, "Configuración 2": 1.0, "Configuración 3": 1.5}
 sep = sep_options[config]
 
-# Extras opcionales
-density = st.sidebar.slider("Densidad de líneas (streamplot)", 0.6, 2.0, 1.5, 0.1)
-grid_pts = st.sidebar.slider("Resolución de grilla (por eje)", 150, 500, 400, 50)
-
 # --- Cálculo y dibujo ---
-def plot_parallel_plate(sep, density=1.5, grid_pts=400):
+def plot_parallel_plate(sep, density=1.8, grid_pts=400):
     # Distribución de cargas (placas en y = ±sep/2)
     xs = np.linspace(-length/2, length/2, N)
     q = sigma * (length / N)
@@ -57,9 +57,8 @@ def plot_parallel_plate(sep, density=1.5, grid_pts=400):
         Ex += cq * dx * inv_r3
         Ey += cq * dy * inv_r3
 
-    # Dibujo con matplotlib (render en Streamlit)
+    # Dibujo con matplotlib
     fig, ax = plt.subplots(figsize=(7, 7))
-    # Líneas de campo en negro
     ax.streamplot(X, Y, Ex, Ey, color='k', linewidth=1, density=density, arrowsize=1)
 
     # Placas
@@ -80,7 +79,7 @@ def plot_parallel_plate(sep, density=1.5, grid_pts=400):
 
     return fig
 
-fig = plot_parallel_plate(sep, density=density, grid_pts=grid_pts)
+fig = plot_parallel_plate(sep, density=DENSITY, grid_pts=GRID_PTS)
 st.pyplot(fig, use_container_width=True)
 
 st.markdown(
@@ -88,3 +87,4 @@ st.markdown(
     "© Domenico Sapone, Camila Montecinos"
     "</div>", unsafe_allow_html=True
 )
+
